@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: experimental-app
+    env: docker
+    dockerfilePath: ./docker/prod/Dockerfile
+    port: 80

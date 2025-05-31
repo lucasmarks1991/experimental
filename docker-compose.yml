@@ -1,0 +1,58 @@
+services:
+    experimental-app:
+        image: experimental-app
+        container_name: experimental-app
+        build:
+            context: .
+            dockerfile: ./docker/dev/Dockerfile
+        entrypoint: ["/usr/local/bin/entrypoint.sh"]
+        command: ["supervisord", "-c", "/etc/supervisord.conf"]
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+            - ./docker/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/supervisord.conf:/etc/supervisord.conf
+            - ./docker/dev/entrypoint.sh:/usr/local/bin/entrypoint.sh
+        ports:
+            - "8000:80"
+        networks:
+            - experimental
+
+    experimental-mysql:
+        image: mysql:latest
+        container_name: experimental-mysql
+        tmpfs:
+            - /var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_TCP_PORT: 3306
+        ports:
+            - "8001:3306"
+        networks:
+            - experimental
+
+    experimental-redis:
+        image: redis:latest
+        container_name: experimental-redis
+        tmpfs:
+            - /data
+        ports:
+            - "8002:6379"
+        networks:
+            - experimental
+
+    experimental-mailhog:
+        image: mailhog/mailhog
+        container_name: experimental-mailhog
+        tmpfs:
+            - /tmp
+        ports:
+            - "8003:8025"
+        expose:
+            - "1025"
+        networks:
+            - experimental
+
+networks:
+    experimental:
+        name: experimental

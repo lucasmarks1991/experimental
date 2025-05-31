@@ -1,0 +1,17 @@
+# PHP dependencies
+vendor/
+
+# ENV files
+.env
+.env.*
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
