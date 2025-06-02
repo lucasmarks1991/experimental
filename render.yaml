@@ -1,6 +1,9 @@
 services:
   - type: web
-    name: experimental-app
-    env: docker
+    name: experimental
+    runtime: docker
+    plan: free
+    region: oregon
     dockerfilePath: ./docker/prod/Dockerfile
-    port: 80
+    autoDeployTrigger: off
+    healthCheckPath: /health-check
