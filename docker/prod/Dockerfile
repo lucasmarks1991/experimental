@@ -38,6 +38,7 @@ RUN apk add --no-cache --virtual .build-deps \
         xml \
         zip \
         opcache \
+        pcntl \
     && pecl install pdo_sqlsrv sqlsrv \
     && docker-php-ext-enable pdo_sqlsrv sqlsrv \
     && apk del .build-deps
